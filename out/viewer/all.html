@@ -1,0 +1,5 @@
+<!doctype html><body><canvas id=c></canvas><script src="pdf.min.js"></script><script>
+pdfjsLib.GlobalWorkerOptions.workerSrc="pdf.worker.min.js";
+const J={lec_01:[47],lec_03:[16,19,22,26,27,28,29],lec_04:[5,6,8,9,17,18,24,31,32,36,38,39,40,41],lec_05:[7,10,11,13,23,24,36,37,38,39,40],lec_06:[5,7,9,15,18,20,24,25],lec_07:[6,7,14,30,31,32],lec_08:[4,6,8,13,16],lec_09:[5,30,46],lec_10:[9,10,11,12,14,15,16,19,20,23,26,44,46,48]};
+(async()=>{for(const f in J){const d=await pdfjsLib.getDocument(f+'.pdf').promise;for(const n of J[f]){const p=await d.getPage(n);const v=p.getViewport({scale:1});const vp=p.getViewport({scale:1280/v.width});const c=document.getElementById('c');c.width=vp.width;c.height=vp.height;await p.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;await fetch('/'+f+'_s'+n,{method:'POST',body:JSON.stringify({d:c.toDataURL('image/png')})});}}document.title='ALLDONE';await fetch('/done',{method:'POST',body:JSON.stringify({d:'a,'+btoa('x')})});})();
+</script>

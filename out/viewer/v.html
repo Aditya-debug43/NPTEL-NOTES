@@ -1,0 +1,7 @@
+<!doctype html><body style="margin:0;background:#fff"><canvas id=c></canvas>
+<script src="pdf.min.js"></script>
+<script>
+const q=new URLSearchParams(location.search);
+pdfjsLib.GlobalWorkerOptions.workerSrc="pdf.worker.min.js";
+pdfjsLib.getDocument(q.get('f')+'.pdf').promise.then(d=>d.getPage(+q.get('p'))).then(p=>{const v=p.getViewport({scale:1});const s=1280/v.width;const vp=p.getViewport({scale:s});const c=document.getElementById('c');c.width=vp.width;c.height=vp.height;return p.render({canvasContext:c.getContext('2d'),viewport:vp}).promise}).then(()=>document.title='done').catch(e=>document.body.append(String(e)));
+</script>
